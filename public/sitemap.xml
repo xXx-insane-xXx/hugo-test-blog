@@ -2,24 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>//localhost:1313/blog/</loc>
+    <loc>localhost/blog/</loc>
   </url><url>
-    <loc>//localhost:1313/tags/first-post/</loc>
+    <loc>localhost/tags/first-post/</loc>
   </url><url>
-    <loc>//localhost:1313/posts/hello-world/</loc>
+    <loc>localhost/posts/hello-world/</loc>
   </url><url>
-    <loc>//localhost:1313/tags/hello-world/</loc>
+    <loc>localhost/tags/hello-world/</loc>
   </url><url>
-    <loc>//localhost:1313/tags/hugo-pipeline/</loc>
+    <loc>localhost/tags/hugo-pipeline/</loc>
   </url><url>
-    <loc>//localhost:1313/</loc>
+    <loc>localhost/</loc>
   </url><url>
-    <loc>//localhost:1313/posts/hugo-pipeline/</loc>
+    <loc>localhost/posts/hugo-pipeline/</loc>
   </url><url>
-    <loc>//localhost:1313/posts/</loc>
+    <loc>localhost/posts/</loc>
   </url><url>
-    <loc>//localhost:1313/series/</loc>
+    <loc>localhost/series/</loc>
   </url><url>
-    <loc>//localhost:1313/tags/</loc>
+    <loc>localhost/tags/</loc>
   </url>
 </urlset>

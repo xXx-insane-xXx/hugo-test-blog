@@ -1,34 +1,34 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Posts on I simply log my tech journey here!</title>
-        <link>//localhost:1313/posts/</link>
+        <link>localhost/posts/</link>
         <description>Recent content in Posts on I simply log my tech journey here!</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-        <atom:link href="//localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="localhost/posts/index.xml" rel="self" type="application/rss+xml" />
         
         <item>
             <title>Hello World!</title>
-            <link>//localhost:1313/posts/hello-world/</link>
+            <link>localhost/posts/hello-world/</link>
             <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
             
-            <guid>//localhost:1313/posts/hello-world/</guid>
+            <guid>localhost/posts/hello-world/</guid>
             <description>&lt;p&gt;This is an awesome blog. Ah not really I guess.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;images/image.png&#34; alt=&#34;guts photo&#34;&gt;
+&lt;p&gt;&lt;img src=&#34;localhost/images/image.png&#34; alt=&#34;guts photo&#34;&gt;
 &lt;img src=&#34;https://i.postimg.cc/PJFTkPFM/dino-plain-face-meme.png&#34; alt=&#34;dino&#34;&gt;&lt;/p&gt;</description>
             <content type="html"><![CDATA[<p>This is an awesome blog. Ah not really I guess.</p>
-<p><img src="images/image.png" alt="guts photo">
+<p><img src="/images/image.png" alt="guts photo">
 <img src="https://i.postimg.cc/PJFTkPFM/dino-plain-face-meme.png" alt="dino"></p>
 ]]></content>
         </item>
         
         <item>
             <title>Insane hugo pipeline</title>
-            <link>//localhost:1313/posts/hugo-pipeline/</link>
+            <link>localhost/posts/hugo-pipeline/</link>
             <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
             
-            <guid>//localhost:1313/posts/hugo-pipeline/</guid>
+            <guid>localhost/posts/hugo-pipeline/</guid>
             <description>&lt;h1 id=&#34;setup-hugo--git--obsidian-blog-pipeline&#34;&gt;Setup Hugo + Git + Obsidian blog pipeline&lt;/h1&gt;
 &lt;h2 id=&#34;install-and-setup&#34;&gt;Install and setup&lt;/h2&gt;
 &lt;h4 id=&#34;1-install-obsidian-actually-org-mode-is-better-for-those-who-know--&#34;&gt;1. Install obsidian (Actually org mode is better, for those who know) -&lt;/h4&gt;
@@ -222,6 +222,7 @@ It will then stop showing in the markdown but would work in the website.&lt;/li&
 &lt;li&gt;Anything created under static is copied to public
 Example: static/images/image.png is copied as /public/images/image.png&lt;/li&gt;
 &lt;li&gt;So in markdown you can also use &lt;code&gt;/images/image.png&lt;/code&gt; as the location for the image. Again it will work in website but won&amp;rsquo;t show in the site.&lt;/li&gt;
+&lt;li&gt;Third is to create &lt;code&gt;images&lt;/code&gt; directory in the root of the obisidian, and sync it with &lt;code&gt;static&lt;/code&gt;. So now in obsidian you can use &lt;code&gt;/images/image.png&lt;/code&gt; as your link as obsidian is sandboxed and supports relative urls only. This would also work in the website.&lt;/li&gt;
 &lt;/ol&gt;</description>
             <content type="html"><![CDATA[<h1 id="setup-hugo--git--obsidian-blog-pipeline">Setup Hugo + Git + Obsidian blog pipeline</h1>
 <h2 id="install-and-setup">Install and setup</h2>
@@ -416,6 +417,7 @@ It will then stop showing in the markdown but would work in the website.</li>
 <li>Anything created under static is copied to public
 Example: static/images/image.png is copied as /public/images/image.png</li>
 <li>So in markdown you can also use <code>/images/image.png</code> as the location for the image. Again it will work in website but won&rsquo;t show in the site.</li>
+<li>Third is to create <code>images</code> directory in the root of the obisidian, and sync it with <code>static</code>. So now in obsidian you can use <code>/images/image.png</code> as your link as obsidian is sandboxed and supports relative urls only. This would also work in the website.</li>
 </ol>
 ]]></content>
         </item>
