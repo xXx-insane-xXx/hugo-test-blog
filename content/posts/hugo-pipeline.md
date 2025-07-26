@@ -9,6 +9,7 @@ tags:
 
 # Setup Hugo + Git + Obsidian blog pipeline
 
+> Inspired by NetworkChuck's [I started a blog.....in 2024 (why you should too)](https://youtu.be/dnE7c0ELEH8?si=3E6JENc2fJGbbgVT) video.
 ## Install and setup
 
 1. Install obsidian (but is org-mode > markdown ??) -
