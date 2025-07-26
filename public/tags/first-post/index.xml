@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>First-Post on I simply log my tech journey here!</title>
+    <link>//localhost:1313/tags/first-post/</link>
+    <description>Recent content in First-Post on I simply log my tech journey here!</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <atom:link href="//localhost:1313/tags/first-post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hello World!</title>
+      <link>//localhost:1313/posts/hello-world/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>//localhost:1313/posts/hello-world/</guid>
+      <description>&lt;p&gt;This is an awesome blog. Ah not really I guess.&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;images/image.png&#34; alt=&#34;guts photo&#34;&gt;&#xA;&lt;img src=&#34;https://i.postimg.cc/PJFTkPFM/dino-plain-face-meme.png&#34; alt=&#34;dino&#34;&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

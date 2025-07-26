@@ -1,0 +1,424 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Posts on I simply log my tech journey here!</title>
+        <link>//localhost:1313/posts/</link>
+        <description>Recent content in Posts on I simply log my tech journey here!</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+        <atom:link href="//localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Hello World!</title>
+            <link>//localhost:1313/posts/hello-world/</link>
+            <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+            
+            <guid>//localhost:1313/posts/hello-world/</guid>
+            <description>&lt;p&gt;This is an awesome blog. Ah not really I guess.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;images/image.png&#34; alt=&#34;guts photo&#34;&gt;
+&lt;img src=&#34;https://i.postimg.cc/PJFTkPFM/dino-plain-face-meme.png&#34; alt=&#34;dino&#34;&gt;&lt;/p&gt;</description>
+            <content type="html"><![CDATA[<p>This is an awesome blog. Ah not really I guess.</p>
+<p><img src="images/image.png" alt="guts photo">
+<img src="https://i.postimg.cc/PJFTkPFM/dino-plain-face-meme.png" alt="dino"></p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>Insane hugo pipeline</title>
+            <link>//localhost:1313/posts/hugo-pipeline/</link>
+            <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+            
+            <guid>//localhost:1313/posts/hugo-pipeline/</guid>
+            <description>&lt;h1 id=&#34;setup-hugo--git--obsidian-blog-pipeline&#34;&gt;Setup Hugo + Git + Obsidian blog pipeline&lt;/h1&gt;
+&lt;h2 id=&#34;install-and-setup&#34;&gt;Install and setup&lt;/h2&gt;
+&lt;h4 id=&#34;1-install-obsidian-actually-org-mode-is-better-for-those-who-know--&#34;&gt;1. Install obsidian (Actually org mode is better, for those who know) -&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo pacman -S obsidian
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;2-install-prerequisites--&#34;&gt;2. Install prerequisites -&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Install Go - Programming language in which hugo is made so its needed for hugo binary to work.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo pacman -S go
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;Install git - Version control system where we will upload our hugo site.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo pacman -S git
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Configure your git with username and email&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git config --global user.name &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Insane&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git config --global user.email &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;insane@testemail.com&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;Install Hugo - Hugo itself is installed as a single binary called hugo!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo pacman -S hugo
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;setup-obsidian&#34;&gt;Setup obsidian&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Open obsidian and create a vault. Vault is just the main folder where all sub folders or notes are stored. This entire vault can be backed up in cloud storage.
+&lt;ul&gt;
+&lt;li&gt;Let the vault be ~/vault for this tutorial purpose.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Obsidian directly now opens up in this vault. All the obsidian configs for themes, plugins, etc are stored in this root folder inside &lt;code&gt;.obsidian&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Create a sub folder called posts where we will store our posts for hugo.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;create-a-sample-blog&#34;&gt;Create a sample blog&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Create a new note as hello-world and save it. The &lt;code&gt;.md&lt;/code&gt; extension is automatically added but not shown inside obsidian file tree.&lt;/li&gt;
+&lt;li&gt;Add the following content -&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;# My first blog
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;This is an awesome blog. Ah not really I guess.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;setup-hugo&#34;&gt;Setup hugo&lt;/h2&gt;
+&lt;h4 id=&#34;create-basic-hugo-site&#34;&gt;Create basic hugo site&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;cd&lt;/code&gt; into your desired directory where you want to store your site.&lt;/li&gt;
+&lt;li&gt;Run &lt;code&gt;hugo new site &amp;lt;site-name&amp;gt;&lt;/code&gt; to make a site.
+&lt;ul&gt;
+&lt;li&gt;Example: &lt;code&gt;hugo new site hugo-test-blog&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Let the site main directory be at ~/hugo-test-blog for this tutorial.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Go inside hugo-test-blog. Inside here all your website content is present.&lt;/li&gt;
+&lt;li&gt;Initialize git repository here
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;git init .&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;create a repository in GitHub, then a page will open on how to connect your local folder to the remote GitHub repository. Simply follow it :].&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;install-a-hugo-theme&#34;&gt;Install a hugo theme&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;Go to &lt;a href=&#34;https://gohugo.io/installation/linux/&#34;&gt;https://gohugo.io/installation/linux/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Select a desired theme and head to its GitHub page. Here you will find all instructions on how to use it, install it, etc. I will use a theme called hello-friend-ng and use git submodule method to install the theme.&lt;/li&gt;
+&lt;li&gt;Make sure you are inside &lt;code&gt;hugo-test-blog&lt;/code&gt;. Then run this command to install the theme.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Theme name: hello-friend-ng. &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Goto: https://github.com/rhazdon/hugo-theme-hello-friend-ng to know more about it.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git submodule add https://github.com/rhazdon/hugo-theme-hello-friend-ng.git themes/hello-friend-ng
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Copy this config to &lt;code&gt;./hugo.toml&lt;/code&gt;. Or simply head to the theme GitHub and get the latest config from their.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-toml&#34; data-lang=&#34;toml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;baseurl&lt;/span&gt;              = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;localhost&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;title&lt;/span&gt;                = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;My Blog&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;languageCode&lt;/span&gt;         = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;en-us&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;theme&lt;/span&gt;                = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;hello-friend-ng&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;pagination&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;pagerSize&lt;/span&gt; = &lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[&lt;span style=&#34;color:#a6e22e&#34;&gt;params&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;dateform&lt;/span&gt;        = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Jan 2, 2006&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;dateformShort&lt;/span&gt;   = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Jan 2&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;dateformNum&lt;/span&gt;     = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2006-01-02&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;dateformNumTime&lt;/span&gt; = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;2006-01-02 15:04&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;# Subtitle for home&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;homeSubtitle&lt;/span&gt; = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;A simple and beautiful blog&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;# Set disableReadOtherPosts to true in order to hide the links to other posts.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;disableReadOtherPosts&lt;/span&gt; = &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;# Enable sharing buttons, if you like&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;enableSharingButtons&lt;/span&gt; = &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;# Show a global language switcher in the navigation bar&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;enableGlobalLanguageMenu&lt;/span&gt; = &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;# Metadata mostly used in document&amp;#39;s head&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;description&lt;/span&gt; = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;My new homepage or blog&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;keywords&lt;/span&gt; = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;homepage, blog&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;images&lt;/span&gt; = [&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[&lt;span style=&#34;color:#a6e22e&#34;&gt;taxonomies&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;category&lt;/span&gt; = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;blog&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;tag&lt;/span&gt;      = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;tags&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;series&lt;/span&gt;   = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;series&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[&lt;span style=&#34;color:#a6e22e&#34;&gt;languages&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  [&lt;span style=&#34;color:#a6e22e&#34;&gt;languages&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;en&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;title&lt;/span&gt; = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello Friend NG&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;keywords&lt;/span&gt; = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;copyright&lt;/span&gt; = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;lt;a href=&amp;#34;https://creativecommons.org/licenses/by-nc/4.0/&amp;#34; target=&amp;#34;_blank&amp;#34; rel=&amp;#34;noopener&amp;#34;&amp;gt;CC BY-NC 4.0&amp;lt;/a&amp;gt;&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;readOtherPosts&lt;/span&gt; = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Read other posts&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  [&lt;span style=&#34;color:#a6e22e&#34;&gt;languages&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;en&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;params&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;subtitle&lt;/span&gt;  = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;A simple theme for Hugo&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    [&lt;span style=&#34;color:#a6e22e&#34;&gt;languages&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;en&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;params&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;logo&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#a6e22e&#34;&gt;logoText&lt;/span&gt; = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;hello friend ng&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#a6e22e&#34;&gt;logoHomeLink&lt;/span&gt; = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# or&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# path = &amp;#34;/img/your-example-logo.svg&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# alt = &amp;#34;Your example logo alt text&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#75715e&#34;&gt;# And you can even create generic menu&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  [[&lt;span style=&#34;color:#a6e22e&#34;&gt;menu&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;]]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;identifier&lt;/span&gt; = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;blog&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;name&lt;/span&gt;       = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Blog&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;url&lt;/span&gt;        = &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/posts&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;run-hugo-site&#34;&gt;Run hugo site&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;Run this command to run the hugo site locally&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;hugo server -t hello-friend-ng
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Go to &lt;code&gt;localhost:1313&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Now your site is running!&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;post-blogs-in-your-site&#34;&gt;Post blogs in your site&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;All your posts goes inside content/posts directory.&lt;/li&gt;
+&lt;li&gt;Make &lt;code&gt;posts&lt;/code&gt; dir inside &lt;code&gt;content&lt;/code&gt; subdir if not already their.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir content/posts 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Sync your obsidian posts folder to content/posts folder. We will use rsync for it.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rsync -av --delete ~/vault/posts ~/hugo-test-blog/content/posts
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# source path is where you created your posts dir for obsidian&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# destination path is ..../hugo-test-blog/content/posts&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Done! Go to &lt;code&gt;posts&lt;/code&gt; in your website and you will see the latest post.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;make-posts-better&#34;&gt;Make posts better&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Add the following front matter to add title and date to your posts.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-md&#34; data-lang=&#34;md&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;---
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;title: Hello World!
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;data: 24/7/25
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;draft: false
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tags:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;-&lt;/span&gt; first-post
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;-&lt;/span&gt; hello-world
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;---
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;This is an awesome blog. Ah not really I guess.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Run the rsync command every time for now when you change your markdown inside obsidian.&lt;/li&gt;
+&lt;li&gt;Reload the site!&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;show-images-in-our-post&#34;&gt;Show images in our post&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Showing images can be tricky.&lt;/li&gt;
+&lt;li&gt;Posts are stored in &lt;code&gt;public/posts&lt;/code&gt; directory. Inside it hugo first creates a directory named after our post and inside its the html converted version of our posts are stored.&lt;/li&gt;
+&lt;li&gt;If you stored files like this
+&lt;ul&gt;
+&lt;li&gt;./content/post/hello-world.md&lt;/li&gt;
+&lt;li&gt;./content/post/image.png
+It get changed to&lt;/li&gt;
+&lt;li&gt;/public/posts/hello-world/hello-world.md&lt;/li&gt;
+&lt;li&gt;/public/posts/image.png
+So you image link path gets broken for the website.
+This can be easily fixed by changing the relative path of the image from &lt;code&gt;.&lt;/code&gt; to &lt;code&gt;..&lt;/code&gt; .
+It will then stop showing in the markdown but would work in the website.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Other way is to create images dir inside ~/hugo-test-blog/static/&lt;/li&gt;
+&lt;li&gt;Anything created under static is copied to public
+Example: static/images/image.png is copied as /public/images/image.png&lt;/li&gt;
+&lt;li&gt;So in markdown you can also use &lt;code&gt;/images/image.png&lt;/code&gt; as the location for the image. Again it will work in website but won&amp;rsquo;t show in the site.&lt;/li&gt;
+&lt;/ol&gt;</description>
+            <content type="html"><![CDATA[<h1 id="setup-hugo--git--obsidian-blog-pipeline">Setup Hugo + Git + Obsidian blog pipeline</h1>
+<h2 id="install-and-setup">Install and setup</h2>
+<h4 id="1-install-obsidian-actually-org-mode-is-better-for-those-who-know--">1. Install obsidian (Actually org mode is better, for those who know) -</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo pacman -S obsidian
+</span></span></code></pre></div><h4 id="2-install-prerequisites--">2. Install prerequisites -</h4>
+<ul>
+<li>Install Go - Programming language in which hugo is made so its needed for hugo binary to work.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo pacman -S go
+</span></span></code></pre></div><ul>
+<li>Install git - Version control system where we will upload our hugo site.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo pacman -S git
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Configure your git with username and email</span>
+</span></span><span style="display:flex;"><span>git config --global user.name <span style="color:#e6db74">&#34;Insane&#34;</span>
+</span></span><span style="display:flex;"><span>git config --global user.email <span style="color:#e6db74">&#34;insane@testemail.com&#34;</span>
+</span></span></code></pre></div><ul>
+<li>Install Hugo - Hugo itself is installed as a single binary called hugo!</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo pacman -S hugo
+</span></span></code></pre></div><hr>
+<h2 id="setup-obsidian">Setup obsidian</h2>
+<ol>
+<li>Open obsidian and create a vault. Vault is just the main folder where all sub folders or notes are stored. This entire vault can be backed up in cloud storage.
+<ul>
+<li>Let the vault be ~/vault for this tutorial purpose.</li>
+</ul>
+</li>
+<li>Obsidian directly now opens up in this vault. All the obsidian configs for themes, plugins, etc are stored in this root folder inside <code>.obsidian</code>.</li>
+<li>Create a sub folder called posts where we will store our posts for hugo.</li>
+</ol>
+<hr>
+<h2 id="create-a-sample-blog">Create a sample blog</h2>
+<ol>
+<li>Create a new note as hello-world and save it. The <code>.md</code> extension is automatically added but not shown inside obsidian file tree.</li>
+<li>Add the following content -</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span># My first blog
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>This is an awesome blog. Ah not really I guess.
+</span></span></code></pre></div><hr>
+<h2 id="setup-hugo">Setup hugo</h2>
+<h4 id="create-basic-hugo-site">Create basic hugo site</h4>
+<ol>
+<li><code>cd</code> into your desired directory where you want to store your site.</li>
+<li>Run <code>hugo new site &lt;site-name&gt;</code> to make a site.
+<ul>
+<li>Example: <code>hugo new site hugo-test-blog</code></li>
+<li>Let the site main directory be at ~/hugo-test-blog for this tutorial.</li>
+</ul>
+</li>
+<li>Go inside hugo-test-blog. Inside here all your website content is present.</li>
+<li>Initialize git repository here
+<ul>
+<li><code>git init .</code></li>
+<li>create a repository in GitHub, then a page will open on how to connect your local folder to the remote GitHub repository. Simply follow it :].</li>
+</ul>
+</li>
+</ol>
+<h4 id="install-a-hugo-theme">Install a hugo theme</h4>
+<ol>
+<li>Go to <a href="https://gohugo.io/installation/linux/">https://gohugo.io/installation/linux/</a></li>
+<li>Select a desired theme and head to its GitHub page. Here you will find all instructions on how to use it, install it, etc. I will use a theme called hello-friend-ng and use git submodule method to install the theme.</li>
+<li>Make sure you are inside <code>hugo-test-blog</code>. Then run this command to install the theme.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Theme name: hello-friend-ng. </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Goto: https://github.com/rhazdon/hugo-theme-hello-friend-ng to know more about it.</span>
+</span></span><span style="display:flex;"><span>git submodule add https://github.com/rhazdon/hugo-theme-hello-friend-ng.git themes/hello-friend-ng
+</span></span></code></pre></div><ol start="4">
+<li>Copy this config to <code>./hugo.toml</code>. Or simply head to the theme GitHub and get the latest config from their.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span><span style="color:#a6e22e">baseurl</span>              = <span style="color:#e6db74">&#34;localhost&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">title</span>                = <span style="color:#e6db74">&#34;My Blog&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">languageCode</span>         = <span style="color:#e6db74">&#34;en-us&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">theme</span>                = <span style="color:#e6db74">&#34;hello-friend-ng&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">pagination</span>.<span style="color:#a6e22e">pagerSize</span> = <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">params</span>]
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">dateform</span>        = <span style="color:#e6db74">&#34;Jan 2, 2006&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">dateformShort</span>   = <span style="color:#e6db74">&#34;Jan 2&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">dateformNum</span>     = <span style="color:#e6db74">&#34;2006-01-02&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">dateformNumTime</span> = <span style="color:#e6db74">&#34;2006-01-02 15:04&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Subtitle for home</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">homeSubtitle</span> = <span style="color:#e6db74">&#34;A simple and beautiful blog&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Set disableReadOtherPosts to true in order to hide the links to other posts.</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">disableReadOtherPosts</span> = <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Enable sharing buttons, if you like</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">enableSharingButtons</span> = <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Show a global language switcher in the navigation bar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">enableGlobalLanguageMenu</span> = <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># Metadata mostly used in document&#39;s head</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">description</span> = <span style="color:#e6db74">&#34;My new homepage or blog&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">keywords</span> = <span style="color:#e6db74">&#34;homepage, blog&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">images</span> = [<span style="color:#e6db74">&#34;&#34;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">taxonomies</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">category</span> = <span style="color:#e6db74">&#34;blog&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tag</span>      = <span style="color:#e6db74">&#34;tags&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">series</span>   = <span style="color:#e6db74">&#34;series&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">languages</span>]
+</span></span><span style="display:flex;"><span>  [<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">en</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">title</span> = <span style="color:#e6db74">&#34;Hello Friend NG&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">keywords</span> = <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">copyright</span> = <span style="color:#e6db74">&#39;&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">readOtherPosts</span> = <span style="color:#e6db74">&#34;Read other posts&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  [<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">en</span>.<span style="color:#a6e22e">params</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">subtitle</span>  = <span style="color:#e6db74">&#34;A simple theme for Hugo&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    [<span style="color:#a6e22e">languages</span>.<span style="color:#a6e22e">en</span>.<span style="color:#a6e22e">params</span>.<span style="color:#a6e22e">logo</span>]
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">logoText</span> = <span style="color:#e6db74">&#34;hello friend ng&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">logoHomeLink</span> = <span style="color:#e6db74">&#34;/&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># or</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># path = &#34;/img/your-example-logo.svg&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># alt = &#34;Your example logo alt text&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e"># And you can even create generic menu</span>
+</span></span><span style="display:flex;"><span>  [[<span style="color:#a6e22e">menu</span>.<span style="color:#a6e22e">main</span>]]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">identifier</span> = <span style="color:#e6db74">&#34;blog&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">name</span>       = <span style="color:#e6db74">&#34;Blog&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">url</span>        = <span style="color:#e6db74">&#34;/posts&#34;</span>
+</span></span></code></pre></div><h4 id="run-hugo-site">Run hugo site</h4>
+<ol>
+<li>Run this command to run the hugo site locally</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo server -t hello-friend-ng
+</span></span></code></pre></div><ol start="2">
+<li>Go to <code>localhost:1313</code></li>
+<li>Now your site is running!</li>
+</ol>
+<h4 id="post-blogs-in-your-site">Post blogs in your site</h4>
+<ol>
+<li>All your posts goes inside content/posts directory.</li>
+<li>Make <code>posts</code> dir inside <code>content</code> subdir if not already their.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir content/posts 
+</span></span></code></pre></div><ol start="3">
+<li>Sync your obsidian posts folder to content/posts folder. We will use rsync for it.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rsync -av --delete ~/vault/posts ~/hugo-test-blog/content/posts
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># source path is where you created your posts dir for obsidian</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># destination path is ..../hugo-test-blog/content/posts</span>
+</span></span></code></pre></div><ol start="4">
+<li>Done! Go to <code>posts</code> in your website and you will see the latest post.</li>
+</ol>
+<hr>
+<h2 id="make-posts-better">Make posts better</h2>
+<ol>
+<li>Add the following front matter to add title and date to your posts.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-md" data-lang="md"><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>title: Hello World!
+</span></span><span style="display:flex;"><span>data: 24/7/25
+</span></span><span style="display:flex;"><span>draft: false
+</span></span><span style="display:flex;"><span>tags:
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> first-post
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">-</span> hello-world
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>This is an awesome blog. Ah not really I guess.
+</span></span></code></pre></div><ol start="2">
+<li>Run the rsync command every time for now when you change your markdown inside obsidian.</li>
+<li>Reload the site!</li>
+</ol>
+<h2 id="show-images-in-our-post">Show images in our post</h2>
+<ol>
+<li>Showing images can be tricky.</li>
+<li>Posts are stored in <code>public/posts</code> directory. Inside it hugo first creates a directory named after our post and inside its the html converted version of our posts are stored.</li>
+<li>If you stored files like this
+<ul>
+<li>./content/post/hello-world.md</li>
+<li>./content/post/image.png
+It get changed to</li>
+<li>/public/posts/hello-world/hello-world.md</li>
+<li>/public/posts/image.png
+So you image link path gets broken for the website.
+This can be easily fixed by changing the relative path of the image from <code>.</code> to <code>..</code> .
+It will then stop showing in the markdown but would work in the website.</li>
+</ul>
+</li>
+<li>Other way is to create images dir inside ~/hugo-test-blog/static/</li>
+<li>Anything created under static is copied to public
+Example: static/images/image.png is copied as /public/images/image.png</li>
+<li>So in markdown you can also use <code>/images/image.png</code> as the location for the image. Again it will work in website but won&rsquo;t show in the site.</li>
+</ol>
+]]></content>
+        </item>
+        
+    </channel>
+</rss>
