@@ -10,7 +10,7 @@ pagination.pagerSize    = 10
   dateformNumTime = "2006-01-02 15:04"
 
   # Subtitle for home
-  homeSubtitle = "Log of Insane"
+  homeSubtitle = "Visit (my main website): https://insanelogs.xyz"
 
   # Set disableReadOtherPosts to true in order to hide the links to other posts.
   disableReadOtherPosts = false
@@ -33,7 +33,7 @@ pagination.pagerSize    = 10
 
 [languages]
   [languages.en]
-    title = "I simply log my tech journey here!"
+    title = "This is a test site made in hugo."
     keywords = ""
     copyright = '<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
     readOtherPosts = "Read other posts"
