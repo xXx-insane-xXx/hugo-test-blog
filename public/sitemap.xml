@@ -2,24 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>localhost/blog/</loc>
+    <loc>https://hugo.insanelogs.xyz/blog/</loc>
   </url><url>
-    <loc>localhost/tags/first-post/</loc>
+    <loc>https://hugo.insanelogs.xyz/tags/first-post/</loc>
   </url><url>
-    <loc>localhost/posts/hello-world/</loc>
+    <loc>https://hugo.insanelogs.xyz/posts/hello-world/</loc>
   </url><url>
-    <loc>localhost/tags/hello-world/</loc>
+    <loc>https://hugo.insanelogs.xyz/tags/hello-world/</loc>
   </url><url>
-    <loc>localhost/tags/hugo-pipeline/</loc>
+    <loc>https://hugo.insanelogs.xyz/tags/hugo-pipeline/</loc>
   </url><url>
-    <loc>localhost/</loc>
+    <loc>https://hugo.insanelogs.xyz/</loc>
   </url><url>
-    <loc>localhost/posts/hugo-pipeline/</loc>
+    <loc>https://hugo.insanelogs.xyz/posts/hugo-pipeline/</loc>
   </url><url>
-    <loc>localhost/posts/</loc>
+    <loc>https://hugo.insanelogs.xyz/posts/</loc>
   </url><url>
-    <loc>localhost/series/</loc>
+    <loc>https://hugo.insanelogs.xyz/series/</loc>
   </url><url>
-    <loc>localhost/tags/</loc>
+    <loc>https://hugo.insanelogs.xyz/tags/</loc>
   </url>
 </urlset>

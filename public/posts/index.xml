@@ -1,21 +1,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Posts on I simply log my tech journey here!</title>
-        <link>localhost/posts/</link>
+        <link>https://hugo.insanelogs.xyz/posts/</link>
         <description>Recent content in Posts on I simply log my tech journey here!</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-        <atom:link href="localhost/posts/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://hugo.insanelogs.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
         
         <item>
             <title>Hello World!</title>
-            <link>localhost/posts/hello-world/</link>
+            <link>https://hugo.insanelogs.xyz/posts/hello-world/</link>
             <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
             
-            <guid>localhost/posts/hello-world/</guid>
+            <guid>https://hugo.insanelogs.xyz/posts/hello-world/</guid>
             <description>&lt;p&gt;This is an awesome blog. Ah not really I guess.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;localhost/images/image.png&#34; alt=&#34;guts photo&#34;&gt;
+&lt;p&gt;&lt;img src=&#34;https://hugo.insanelogs.xyz/images/image.png&#34; alt=&#34;guts photo&#34;&gt;
 &lt;img src=&#34;https://i.postimg.cc/PJFTkPFM/dino-plain-face-meme.png&#34; alt=&#34;dino&#34;&gt;&lt;/p&gt;</description>
             <content type="html"><![CDATA[<p>This is an awesome blog. Ah not really I guess.</p>
 <p><img src="/images/image.png" alt="guts photo">
@@ -25,10 +25,10 @@
         
         <item>
             <title>Insane hugo pipeline</title>
-            <link>localhost/posts/hugo-pipeline/</link>
+            <link>https://hugo.insanelogs.xyz/posts/hugo-pipeline/</link>
             <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
             
-            <guid>localhost/posts/hugo-pipeline/</guid>
+            <guid>https://hugo.insanelogs.xyz/posts/hugo-pipeline/</guid>
             <description>&lt;h1 id=&#34;setup-hugo--git--obsidian-blog-pipeline&#34;&gt;Setup Hugo + Git + Obsidian blog pipeline&lt;/h1&gt;
 &lt;h2 id=&#34;install-and-setup&#34;&gt;Install and setup&lt;/h2&gt;
 &lt;h4 id=&#34;1-install-obsidian-actually-org-mode-is-better-for-those-who-know--&#34;&gt;1. Install obsidian (Actually org mode is better, for those who know) -&lt;/h4&gt;

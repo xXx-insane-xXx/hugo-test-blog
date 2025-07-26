@@ -1,4 +1,4 @@
-baseurl                 = "localhost"
+baseurl                 = "https://hugo.insanelogs.xyz/"
 title                   = "Insane logs"
 languageCode            = "en-us"
 theme                   = "hello-friend-ng"
