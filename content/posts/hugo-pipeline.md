@@ -180,20 +180,42 @@ This is an awesome blog. Ah not really I guess.
 2. Run the rsync command every time for now when you change your markdown inside obsidian.
 3. Reload the site!
 
+---
+## How hugo is working.
+1. All your folders in the ``~/hugo-test-blog`` is copied to public folder. And this public folder is what is served by hugo.
+2. Inside public folder everything is in html or css.
+3. Only catch is static folder isn't copied to public but the contents inside of it is copied to ~/hugo-test-blog/public.
+4. Inside public folder any html file if contains ``/`` in the url doesn't mean root of your system. The root here is the public folder itself!
+
 ## Show images in our post
 1. Showing images can be tricky.
-2. Posts are stored in ``public/posts`` directory. Inside it hugo first creates a directory named after our post and inside its the html converted version of our posts are stored.
+2. Posts are stored in ``~/hugo-test-blog/public/posts`` directory to show in the website. Inside it hugo first creates a directory named after our post and inside its the html converted version of our posts are stored.
 3. If you stored files like this
 	- ./content/post/hello-world.md
 	- ./content/post/image.png
 	It get changed to
 	- /public/posts/hello-world/hello-world.md
-	- /public/posts/image.png
-	So you image link path gets broken for the website.
-	This can be easily fixed by changing the relative path of the image from ``.`` to ``..`` .
-	It will then stop showing in the markdown but would work in the website.
-4. Other way is to create images dir inside ~/hugo-test-blog/static/
-5. Anything created under static is copied to public
-	Example: static/images/image.png is copied as /public/images/image.png
+	- /public/posts/image.png (See here image stays on directory back!)
+4. So obv the image link will be broken as image in the actual website. In ``content/posts/hello-world.md`` you can use ``../image.png`` to fix it. It won't show in the markdown now but will work in the website.
+5. Other way is to create images dir here ``~/hugo-test-blog/static/images``.
 6. So in markdown you can also use ``/images/image.png`` as the location for the image. Again it will work in website but won't show in the site.
-7. Third is to create ``images`` directory in the root of the obisidian, and sync it with ``static``. So now in obsidian you can use ``/images/image.png`` as your link as obsidian is sandboxed and supports relative urls only. This would also work in the website.
+
+#### Most elegant solution
+1. In the root of obsidian vault create a directory called ``images``.
+2. Store all your images here
+3. Now you can link the images in obsidian using ``/images/image.png``. This will work as obsidian is sandboxed and ``/`` means root of obsidian vault not your system. This will show the image in your obsidian markdown as well and the blog as well.
+4. Now sync this directory with ``~/hugo-test-blog/static/images``
+```bash
+rsync -av --delete ~/vault/images ~/hugo-test-blog/static/images
+```
+5. You're done! No need of any fancy script.
+
+#### Even better solution
+Host all your images in a cdn and simply copy and paste url in your markdown. Its the most easiest option.
+
+---
+## Make it live via GitHub pages
+Just follow this guide https://gohugo.io/host-and-deploy/host-on-github-pages/. Its super simple and your site will be up in minutes.
+
+---
+Well that's it! Thank you.
