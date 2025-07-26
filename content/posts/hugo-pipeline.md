@@ -303,8 +303,10 @@ And that ``slash /`` thingy is automatically handled by GitHub. As the root here
 
 ---
 
-Well that's it! If you find any errors or mistakes in this blog, please to mail me.<br>
-Mail: insane@insanelogs.xyz <br>
+Well that's it! If you find any errors or mistakes in this blog, please to mail me.
+
+Mail: insane@insanelogs.xyz
+
 Thank you :]
 
 🦖
