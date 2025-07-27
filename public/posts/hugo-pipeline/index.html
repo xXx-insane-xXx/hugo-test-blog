@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <head>
         <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="">
-<meta name="description" content="Setup Hugo &#43; Git &#43; Obsidian blog pipeline Install and setup 1. Install obsidian (Actually org mode is better, for those who know) - sudo pacman -S obsidian 2. Install prerequisites - Install Go - Programming language in which hugo is made so its needed for hugo binary to work. sudo pacman -S go Install git - Version control system where we will upload our hugo site. sudo pacman -S git # Configure your git with username and email git config --global user.name &#34;Insane&#34; git config --global user.email &#34;insane@testemail.com&#34; Install Hugo - Hugo itself is installed as a single binary called hugo! sudo pacman -S hugo Setup obsidian Open obsidian and create a vault. Vault is just the main folder where all sub folders or notes are stored. This entire vault can be backed up in cloud storage. Let the vault be ~/vault for this tutorial purpose. Obsidian directly now opens up in this vault. All the obsidian configs for themes, plugins, etc are stored in this root folder inside .obsidian. Create a sub folder called posts where we will store our posts for hugo. Create a sample blog Create a new note as hello-world and save it. The .md extension is automatically added but not shown inside obsidian file tree. Add the following content - # My first blog This is an awesome blog. Ah not really I guess. Setup hugo Create basic hugo site cd into your desired directory where you want to store your site. Run hugo new site &lt;site-name&gt; to make a site. Example: hugo new site hugo-test-blog Let the site main directory be at ~/hugo-test-blog for this tutorial. Go inside hugo-test-blog. Inside here all your website content is present. Initialize git repository here git init . create a repository in GitHub, then a page will open on how to connect your local folder to the remote GitHub repository. Simply follow it :]. Install a hugo theme Go to https://gohugo.io/installation/linux/ Select a desired theme and head to its GitHub page. Here you will find all instructions on how to use it, install it, etc. I will use a theme called hello-friend-ng and use git submodule method to install the theme. Make sure you are inside hugo-test-blog. Then run this command to install the theme. # Theme name: hello-friend-ng. # Goto: https://github.com/rhazdon/hugo-theme-hello-friend-ng to know more about it. git submodule add https://github.com/rhazdon/hugo-theme-hello-friend-ng.git themes/hello-friend-ng Copy this config to ./hugo.toml. Or simply head to the theme GitHub and get the latest config from their. baseurl = &#34;localhost&#34; title = &#34;My Blog&#34; languageCode = &#34;en-us&#34; theme = &#34;hello-friend-ng&#34; pagination.pagerSize = 10 [params] dateform = &#34;Jan 2, 2006&#34; dateformShort = &#34;Jan 2&#34; dateformNum = &#34;2006-01-02&#34; dateformNumTime = &#34;2006-01-02 15:04&#34; # Subtitle for home homeSubtitle = &#34;A simple and beautiful blog&#34; # Set disableReadOtherPosts to true in order to hide the links to other posts. disableReadOtherPosts = false # Enable sharing buttons, if you like enableSharingButtons = true # Show a global language switcher in the navigation bar enableGlobalLanguageMenu = true # Metadata mostly used in document&#39;s head description = &#34;My new homepage or blog&#34; keywords = &#34;homepage, blog&#34; images = [&#34;&#34;] [taxonomies] category = &#34;blog&#34; tag = &#34;tags&#34; series = &#34;series&#34; [languages] [languages.en] title = &#34;Hello Friend NG&#34; keywords = &#34;&#34; copyright = &#39;&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;&#39; readOtherPosts = &#34;Read other posts&#34; [languages.en.params] subtitle = &#34;A simple theme for Hugo&#34; [languages.en.params.logo] logoText = &#34;hello friend ng&#34; logoHomeLink = &#34;/&#34; # or # # path = &#34;/img/your-example-logo.svg&#34; # alt = &#34;Your example logo alt text&#34; # And you can even create generic menu [[menu.main]] identifier = &#34;blog&#34; name = &#34;Blog&#34; url = &#34;/posts&#34; Run hugo site Run this command to run the hugo site locally hugo server -t hello-friend-ng Go to localhost:1313 Now your site is running! Post blogs in your site All your posts goes inside content/posts directory. Make posts dir inside content subdir if not already their. mkdir content/posts Sync your obsidian posts folder to content/posts folder. We will use rsync for it. rsync -av --delete ~/vault/posts ~/hugo-test-blog/content/posts # source path is where you created your posts dir for obsidian # destination path is ..../hugo-test-blog/content/posts Done! Go to posts in your website and you will see the latest post. Make posts better Add the following front matter to add title and date to your posts. --- title: Hello World! data: 24/7/25 draft: false tags: - first-post - hello-world --- This is an awesome blog. Ah not really I guess. Run the rsync command every time for now when you change your markdown inside obsidian. Reload the site! How hugo is working. All your folders in the ~/hugo-test-blog is copied to public folder. And this public folder is what is served by hugo. Inside public folder everything is in html or css. Only catch is static folder isn&rsquo;t copied to public but the contents inside of it is copied to ~/hugo-test-blog/public. Inside public folder any html file if contains / in the url doesn&rsquo;t mean root of your system. The root here is the public folder itself! Show images in our post Showing images can be tricky. Posts are stored in ~/hugo-test-blog/public/posts directory to show in the website. Inside it hugo first creates a directory named after our post and inside its the html converted version of our posts are stored. If you stored files like this ./content/post/hello-world.md ./content/post/image.png It get changed to /public/posts/hello-world/hello-world.md /public/posts/image.png (See here image stays on directory back!) So obv the image link will be broken as image in the actual website. In content/posts/hello-world.md you can use ../image.png to fix it. It won&rsquo;t show in the markdown now but will work in the website. Other way is to create images dir here ~/hugo-test-blog/static/images. So in markdown you can also use /images/image.png as the location for the image. Again it will work in website but won&rsquo;t show in the site. Most elegant solution In the root of obsidian vault create a directory called images. Store all your images here Now you can link the images in obsidian using /images/image.png. This will work as obsidian is sandboxed and / means root of obsidian vault not your system. This will show the image in your obsidian markdown as well and the blog as well. Now sync this directory with ~/hugo-test-blog/static/images rsync -av --delete ~/vault/images ~/hugo-test-blog/static/images You&rsquo;re done! No need of any fancy script. Even better solution Host all your images in a cdn and simply copy and paste url in your markdown. Its the most easiest option.
+<meta name="description" content="Setup Hugo &#43; Obsidian &#43; Git blog pipeline in Arch Linux Inspired by NetworkChuck&rsquo;s I started a blog&hellip;..in 2024 (why you should too) video.
+Install and setup Install obsidian (but is org-mode &gt; markdown ??) - sudo pacman -S obsidian Install prerequisites - Install Go - Programming language in which hugo is made so its needed for hugo binary to work. sudo pacman -S go Install git and set it up sudo pacman -S git # Install git # Configure your git with username and email git config --global user.name &#34;Insane&#34; git config --global user.email &#34;insane@testemail.com&#34; Install Hugo - Hugo itself is installed as a single binary called hugo ! sudo pacman -S hugo Setup obsidian Open obsidian and create a vault. Vault is just the main folder inside which you store all your obsidian notes. Let the vault be ~/vault for this tutorial purpose. All obsidian config for themes, plugins, etc are stored in ~/vault/.obsidian. Create a sub folder called posts where we will store our posts for hugo. Note: Obsidian is sandboxed. When you open obsidian under this vault then ~/vault becomes the root directory for obsidian. The slash / means root of the vault and not your actual system.
 " />
 <meta name="keywords" content="homepage, blog, hugo-pipeline" />
 <meta name="robots" content="noodp" />
 <meta name="theme-color" content="" />
-<link rel="canonical" href="http://localhost:1313/posts/hugo-pipeline/" />
+<link rel="canonical" href="https://hugo.insanelogs.xyz/posts/hugo-pipeline/" />
 
 
     <title>
@@ -41,27 +42,30 @@
 
 
   <meta itemprop="name" content="Insane hugo pipeline">
-  <meta itemprop="description" content="Setup Hugo &#43; Git &#43; Obsidian blog pipeline Install and setup 1. Install obsidian (Actually org mode is better, for those who know) - sudo pacman -S obsidian 2. Install prerequisites - Install Go - Programming language in which hugo is made so its needed for hugo binary to work. sudo pacman -S go Install git - Version control system where we will upload our hugo site. sudo pacman -S git # Configure your git with username and email git config --global user.name &#34;Insane&#34; git config --global user.email &#34;insane@testemail.com&#34; Install Hugo - Hugo itself is installed as a single binary called hugo! sudo pacman -S hugo Setup obsidian Open obsidian and create a vault. Vault is just the main folder where all sub folders or notes are stored. This entire vault can be backed up in cloud storage. Let the vault be ~/vault for this tutorial purpose. Obsidian directly now opens up in this vault. All the obsidian configs for themes, plugins, etc are stored in this root folder inside .obsidian. Create a sub folder called posts where we will store our posts for hugo. Create a sample blog Create a new note as hello-world and save it. The .md extension is automatically added but not shown inside obsidian file tree. Add the following content - # My first blog This is an awesome blog. Ah not really I guess. Setup hugo Create basic hugo site cd into your desired directory where you want to store your site. Run hugo new site &lt;site-name&gt; to make a site. Example: hugo new site hugo-test-blog Let the site main directory be at ~/hugo-test-blog for this tutorial. Go inside hugo-test-blog. Inside here all your website content is present. Initialize git repository here git init . create a repository in GitHub, then a page will open on how to connect your local folder to the remote GitHub repository. Simply follow it :]. Install a hugo theme Go to https://gohugo.io/installation/linux/ Select a desired theme and head to its GitHub page. Here you will find all instructions on how to use it, install it, etc. I will use a theme called hello-friend-ng and use git submodule method to install the theme. Make sure you are inside hugo-test-blog. Then run this command to install the theme. # Theme name: hello-friend-ng. # Goto: https://github.com/rhazdon/hugo-theme-hello-friend-ng to know more about it. git submodule add https://github.com/rhazdon/hugo-theme-hello-friend-ng.git themes/hello-friend-ng Copy this config to ./hugo.toml. Or simply head to the theme GitHub and get the latest config from their. baseurl = &#34;localhost&#34; title = &#34;My Blog&#34; languageCode = &#34;en-us&#34; theme = &#34;hello-friend-ng&#34; pagination.pagerSize = 10 [params] dateform = &#34;Jan 2, 2006&#34; dateformShort = &#34;Jan 2&#34; dateformNum = &#34;2006-01-02&#34; dateformNumTime = &#34;2006-01-02 15:04&#34; # Subtitle for home homeSubtitle = &#34;A simple and beautiful blog&#34; # Set disableReadOtherPosts to true in order to hide the links to other posts. disableReadOtherPosts = false # Enable sharing buttons, if you like enableSharingButtons = true # Show a global language switcher in the navigation bar enableGlobalLanguageMenu = true # Metadata mostly used in document&#39;s head description = &#34;My new homepage or blog&#34; keywords = &#34;homepage, blog&#34; images = [&#34;&#34;] [taxonomies] category = &#34;blog&#34; tag = &#34;tags&#34; series = &#34;series&#34; [languages] [languages.en] title = &#34;Hello Friend NG&#34; keywords = &#34;&#34; copyright = &#39;&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;&#39; readOtherPosts = &#34;Read other posts&#34; [languages.en.params] subtitle = &#34;A simple theme for Hugo&#34; [languages.en.params.logo] logoText = &#34;hello friend ng&#34; logoHomeLink = &#34;/&#34; # or # # path = &#34;/img/your-example-logo.svg&#34; # alt = &#34;Your example logo alt text&#34; # And you can even create generic menu [[menu.main]] identifier = &#34;blog&#34; name = &#34;Blog&#34; url = &#34;/posts&#34; Run hugo site Run this command to run the hugo site locally hugo server -t hello-friend-ng Go to localhost:1313 Now your site is running! Post blogs in your site All your posts goes inside content/posts directory. Make posts dir inside content subdir if not already their. mkdir content/posts Sync your obsidian posts folder to content/posts folder. We will use rsync for it. rsync -av --delete ~/vault/posts ~/hugo-test-blog/content/posts # source path is where you created your posts dir for obsidian # destination path is ..../hugo-test-blog/content/posts Done! Go to posts in your website and you will see the latest post. Make posts better Add the following front matter to add title and date to your posts. --- title: Hello World! data: 24/7/25 draft: false tags: - first-post - hello-world --- This is an awesome blog. Ah not really I guess. Run the rsync command every time for now when you change your markdown inside obsidian. Reload the site! How hugo is working. All your folders in the ~/hugo-test-blog is copied to public folder. And this public folder is what is served by hugo. Inside public folder everything is in html or css. Only catch is static folder isn’t copied to public but the contents inside of it is copied to ~/hugo-test-blog/public. Inside public folder any html file if contains / in the url doesn’t mean root of your system. The root here is the public folder itself! Show images in our post Showing images can be tricky. Posts are stored in ~/hugo-test-blog/public/posts directory to show in the website. Inside it hugo first creates a directory named after our post and inside its the html converted version of our posts are stored. If you stored files like this ./content/post/hello-world.md ./content/post/image.png It get changed to /public/posts/hello-world/hello-world.md /public/posts/image.png (See here image stays on directory back!) So obv the image link will be broken as image in the actual website. In content/posts/hello-world.md you can use ../image.png to fix it. It won’t show in the markdown now but will work in the website. Other way is to create images dir here ~/hugo-test-blog/static/images. So in markdown you can also use /images/image.png as the location for the image. Again it will work in website but won’t show in the site. Most elegant solution In the root of obsidian vault create a directory called images. Store all your images here Now you can link the images in obsidian using /images/image.png. This will work as obsidian is sandboxed and / means root of obsidian vault not your system. This will show the image in your obsidian markdown as well and the blog as well. Now sync this directory with ~/hugo-test-blog/static/images rsync -av --delete ~/vault/images ~/hugo-test-blog/static/images You’re done! No need of any fancy script. Even better solution Host all your images in a cdn and simply copy and paste url in your markdown. Its the most easiest option.">
-  <meta itemprop="wordCount" content="1105">
-  <meta itemprop="image" content="http://localhost:1313/">
+  <meta itemprop="description" content="Setup Hugo &#43; Obsidian &#43; Git blog pipeline in Arch Linux Inspired by NetworkChuck’s I started a blog…..in 2024 (why you should too) video.
+Install and setup Install obsidian (but is org-mode &gt; markdown ??) - sudo pacman -S obsidian Install prerequisites - Install Go - Programming language in which hugo is made so its needed for hugo binary to work. sudo pacman -S go Install git and set it up sudo pacman -S git # Install git # Configure your git with username and email git config --global user.name &#34;Insane&#34; git config --global user.email &#34;insane@testemail.com&#34; Install Hugo - Hugo itself is installed as a single binary called hugo ! sudo pacman -S hugo Setup obsidian Open obsidian and create a vault. Vault is just the main folder inside which you store all your obsidian notes. Let the vault be ~/vault for this tutorial purpose. All obsidian config for themes, plugins, etc are stored in ~/vault/.obsidian. Create a sub folder called posts where we will store our posts for hugo. Note: Obsidian is sandboxed. When you open obsidian under this vault then ~/vault becomes the root directory for obsidian. The slash / means root of the vault and not your actual system.">
+  <meta itemprop="wordCount" content="1437">
+  <meta itemprop="image" content="https://hugo.insanelogs.xyz/">
   <meta itemprop="keywords" content="Hugo-Pipeline">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://localhost:1313/">
+  <meta name="twitter:image" content="https://hugo.insanelogs.xyz/">
   <meta name="twitter:title" content="Insane hugo pipeline">
-  <meta name="twitter:description" content="Setup Hugo &#43; Git &#43; Obsidian blog pipeline Install and setup 1. Install obsidian (Actually org mode is better, for those who know) - sudo pacman -S obsidian 2. Install prerequisites - Install Go - Programming language in which hugo is made so its needed for hugo binary to work. sudo pacman -S go Install git - Version control system where we will upload our hugo site. sudo pacman -S git # Configure your git with username and email git config --global user.name &#34;Insane&#34; git config --global user.email &#34;insane@testemail.com&#34; Install Hugo - Hugo itself is installed as a single binary called hugo! sudo pacman -S hugo Setup obsidian Open obsidian and create a vault. Vault is just the main folder where all sub folders or notes are stored. This entire vault can be backed up in cloud storage. Let the vault be ~/vault for this tutorial purpose. Obsidian directly now opens up in this vault. All the obsidian configs for themes, plugins, etc are stored in this root folder inside .obsidian. Create a sub folder called posts where we will store our posts for hugo. Create a sample blog Create a new note as hello-world and save it. The .md extension is automatically added but not shown inside obsidian file tree. Add the following content - # My first blog This is an awesome blog. Ah not really I guess. Setup hugo Create basic hugo site cd into your desired directory where you want to store your site. Run hugo new site &lt;site-name&gt; to make a site. Example: hugo new site hugo-test-blog Let the site main directory be at ~/hugo-test-blog for this tutorial. Go inside hugo-test-blog. Inside here all your website content is present. Initialize git repository here git init . create a repository in GitHub, then a page will open on how to connect your local folder to the remote GitHub repository. Simply follow it :]. Install a hugo theme Go to https://gohugo.io/installation/linux/ Select a desired theme and head to its GitHub page. Here you will find all instructions on how to use it, install it, etc. I will use a theme called hello-friend-ng and use git submodule method to install the theme. Make sure you are inside hugo-test-blog. Then run this command to install the theme. # Theme name: hello-friend-ng. # Goto: https://github.com/rhazdon/hugo-theme-hello-friend-ng to know more about it. git submodule add https://github.com/rhazdon/hugo-theme-hello-friend-ng.git themes/hello-friend-ng Copy this config to ./hugo.toml. Or simply head to the theme GitHub and get the latest config from their. baseurl = &#34;localhost&#34; title = &#34;My Blog&#34; languageCode = &#34;en-us&#34; theme = &#34;hello-friend-ng&#34; pagination.pagerSize = 10 [params] dateform = &#34;Jan 2, 2006&#34; dateformShort = &#34;Jan 2&#34; dateformNum = &#34;2006-01-02&#34; dateformNumTime = &#34;2006-01-02 15:04&#34; # Subtitle for home homeSubtitle = &#34;A simple and beautiful blog&#34; # Set disableReadOtherPosts to true in order to hide the links to other posts. disableReadOtherPosts = false # Enable sharing buttons, if you like enableSharingButtons = true # Show a global language switcher in the navigation bar enableGlobalLanguageMenu = true # Metadata mostly used in document&#39;s head description = &#34;My new homepage or blog&#34; keywords = &#34;homepage, blog&#34; images = [&#34;&#34;] [taxonomies] category = &#34;blog&#34; tag = &#34;tags&#34; series = &#34;series&#34; [languages] [languages.en] title = &#34;Hello Friend NG&#34; keywords = &#34;&#34; copyright = &#39;&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;&#39; readOtherPosts = &#34;Read other posts&#34; [languages.en.params] subtitle = &#34;A simple theme for Hugo&#34; [languages.en.params.logo] logoText = &#34;hello friend ng&#34; logoHomeLink = &#34;/&#34; # or # # path = &#34;/img/your-example-logo.svg&#34; # alt = &#34;Your example logo alt text&#34; # And you can even create generic menu [[menu.main]] identifier = &#34;blog&#34; name = &#34;Blog&#34; url = &#34;/posts&#34; Run hugo site Run this command to run the hugo site locally hugo server -t hello-friend-ng Go to localhost:1313 Now your site is running! Post blogs in your site All your posts goes inside content/posts directory. Make posts dir inside content subdir if not already their. mkdir content/posts Sync your obsidian posts folder to content/posts folder. We will use rsync for it. rsync -av --delete ~/vault/posts ~/hugo-test-blog/content/posts # source path is where you created your posts dir for obsidian # destination path is ..../hugo-test-blog/content/posts Done! Go to posts in your website and you will see the latest post. Make posts better Add the following front matter to add title and date to your posts. --- title: Hello World! data: 24/7/25 draft: false tags: - first-post - hello-world --- This is an awesome blog. Ah not really I guess. Run the rsync command every time for now when you change your markdown inside obsidian. Reload the site! How hugo is working. All your folders in the ~/hugo-test-blog is copied to public folder. And this public folder is what is served by hugo. Inside public folder everything is in html or css. Only catch is static folder isn’t copied to public but the contents inside of it is copied to ~/hugo-test-blog/public. Inside public folder any html file if contains / in the url doesn’t mean root of your system. The root here is the public folder itself! Show images in our post Showing images can be tricky. Posts are stored in ~/hugo-test-blog/public/posts directory to show in the website. Inside it hugo first creates a directory named after our post and inside its the html converted version of our posts are stored. If you stored files like this ./content/post/hello-world.md ./content/post/image.png It get changed to /public/posts/hello-world/hello-world.md /public/posts/image.png (See here image stays on directory back!) So obv the image link will be broken as image in the actual website. In content/posts/hello-world.md you can use ../image.png to fix it. It won’t show in the markdown now but will work in the website. Other way is to create images dir here ~/hugo-test-blog/static/images. So in markdown you can also use /images/image.png as the location for the image. Again it will work in website but won’t show in the site. Most elegant solution In the root of obsidian vault create a directory called images. Store all your images here Now you can link the images in obsidian using /images/image.png. This will work as obsidian is sandboxed and / means root of obsidian vault not your system. This will show the image in your obsidian markdown as well and the blog as well. Now sync this directory with ~/hugo-test-blog/static/images rsync -av --delete ~/vault/images ~/hugo-test-blog/static/images You’re done! No need of any fancy script. Even better solution Host all your images in a cdn and simply copy and paste url in your markdown. Its the most easiest option.">
+  <meta name="twitter:description" content="Setup Hugo &#43; Obsidian &#43; Git blog pipeline in Arch Linux Inspired by NetworkChuck’s I started a blog…..in 2024 (why you should too) video.
+Install and setup Install obsidian (but is org-mode &gt; markdown ??) - sudo pacman -S obsidian Install prerequisites - Install Go - Programming language in which hugo is made so its needed for hugo binary to work. sudo pacman -S go Install git and set it up sudo pacman -S git # Install git # Configure your git with username and email git config --global user.name &#34;Insane&#34; git config --global user.email &#34;insane@testemail.com&#34; Install Hugo - Hugo itself is installed as a single binary called hugo ! sudo pacman -S hugo Setup obsidian Open obsidian and create a vault. Vault is just the main folder inside which you store all your obsidian notes. Let the vault be ~/vault for this tutorial purpose. All obsidian config for themes, plugins, etc are stored in ~/vault/.obsidian. Create a sub folder called posts where we will store our posts for hugo. Note: Obsidian is sandboxed. When you open obsidian under this vault then ~/vault becomes the root directory for obsidian. The slash / means root of the vault and not your actual system.">
 
 
 
-    <meta property="og:url" content="http://localhost:1313/posts/hugo-pipeline/">
+    <meta property="og:url" content="https://hugo.insanelogs.xyz/posts/hugo-pipeline/">
   <meta property="og:site_name" content="This is a test site made in hugo.">
   <meta property="og:title" content="Insane hugo pipeline">
-  <meta property="og:description" content="Setup Hugo &#43; Git &#43; Obsidian blog pipeline Install and setup 1. Install obsidian (Actually org mode is better, for those who know) - sudo pacman -S obsidian 2. Install prerequisites - Install Go - Programming language in which hugo is made so its needed for hugo binary to work. sudo pacman -S go Install git - Version control system where we will upload our hugo site. sudo pacman -S git # Configure your git with username and email git config --global user.name &#34;Insane&#34; git config --global user.email &#34;insane@testemail.com&#34; Install Hugo - Hugo itself is installed as a single binary called hugo! sudo pacman -S hugo Setup obsidian Open obsidian and create a vault. Vault is just the main folder where all sub folders or notes are stored. This entire vault can be backed up in cloud storage. Let the vault be ~/vault for this tutorial purpose. Obsidian directly now opens up in this vault. All the obsidian configs for themes, plugins, etc are stored in this root folder inside .obsidian. Create a sub folder called posts where we will store our posts for hugo. Create a sample blog Create a new note as hello-world and save it. The .md extension is automatically added but not shown inside obsidian file tree. Add the following content - # My first blog This is an awesome blog. Ah not really I guess. Setup hugo Create basic hugo site cd into your desired directory where you want to store your site. Run hugo new site &lt;site-name&gt; to make a site. Example: hugo new site hugo-test-blog Let the site main directory be at ~/hugo-test-blog for this tutorial. Go inside hugo-test-blog. Inside here all your website content is present. Initialize git repository here git init . create a repository in GitHub, then a page will open on how to connect your local folder to the remote GitHub repository. Simply follow it :]. Install a hugo theme Go to https://gohugo.io/installation/linux/ Select a desired theme and head to its GitHub page. Here you will find all instructions on how to use it, install it, etc. I will use a theme called hello-friend-ng and use git submodule method to install the theme. Make sure you are inside hugo-test-blog. Then run this command to install the theme. # Theme name: hello-friend-ng. # Goto: https://github.com/rhazdon/hugo-theme-hello-friend-ng to know more about it. git submodule add https://github.com/rhazdon/hugo-theme-hello-friend-ng.git themes/hello-friend-ng Copy this config to ./hugo.toml. Or simply head to the theme GitHub and get the latest config from their. baseurl = &#34;localhost&#34; title = &#34;My Blog&#34; languageCode = &#34;en-us&#34; theme = &#34;hello-friend-ng&#34; pagination.pagerSize = 10 [params] dateform = &#34;Jan 2, 2006&#34; dateformShort = &#34;Jan 2&#34; dateformNum = &#34;2006-01-02&#34; dateformNumTime = &#34;2006-01-02 15:04&#34; # Subtitle for home homeSubtitle = &#34;A simple and beautiful blog&#34; # Set disableReadOtherPosts to true in order to hide the links to other posts. disableReadOtherPosts = false # Enable sharing buttons, if you like enableSharingButtons = true # Show a global language switcher in the navigation bar enableGlobalLanguageMenu = true # Metadata mostly used in document&#39;s head description = &#34;My new homepage or blog&#34; keywords = &#34;homepage, blog&#34; images = [&#34;&#34;] [taxonomies] category = &#34;blog&#34; tag = &#34;tags&#34; series = &#34;series&#34; [languages] [languages.en] title = &#34;Hello Friend NG&#34; keywords = &#34;&#34; copyright = &#39;&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;&#39; readOtherPosts = &#34;Read other posts&#34; [languages.en.params] subtitle = &#34;A simple theme for Hugo&#34; [languages.en.params.logo] logoText = &#34;hello friend ng&#34; logoHomeLink = &#34;/&#34; # or # # path = &#34;/img/your-example-logo.svg&#34; # alt = &#34;Your example logo alt text&#34; # And you can even create generic menu [[menu.main]] identifier = &#34;blog&#34; name = &#34;Blog&#34; url = &#34;/posts&#34; Run hugo site Run this command to run the hugo site locally hugo server -t hello-friend-ng Go to localhost:1313 Now your site is running! Post blogs in your site All your posts goes inside content/posts directory. Make posts dir inside content subdir if not already their. mkdir content/posts Sync your obsidian posts folder to content/posts folder. We will use rsync for it. rsync -av --delete ~/vault/posts ~/hugo-test-blog/content/posts # source path is where you created your posts dir for obsidian # destination path is ..../hugo-test-blog/content/posts Done! Go to posts in your website and you will see the latest post. Make posts better Add the following front matter to add title and date to your posts. --- title: Hello World! data: 24/7/25 draft: false tags: - first-post - hello-world --- This is an awesome blog. Ah not really I guess. Run the rsync command every time for now when you change your markdown inside obsidian. Reload the site! How hugo is working. All your folders in the ~/hugo-test-blog is copied to public folder. And this public folder is what is served by hugo. Inside public folder everything is in html or css. Only catch is static folder isn’t copied to public but the contents inside of it is copied to ~/hugo-test-blog/public. Inside public folder any html file if contains / in the url doesn’t mean root of your system. The root here is the public folder itself! Show images in our post Showing images can be tricky. Posts are stored in ~/hugo-test-blog/public/posts directory to show in the website. Inside it hugo first creates a directory named after our post and inside its the html converted version of our posts are stored. If you stored files like this ./content/post/hello-world.md ./content/post/image.png It get changed to /public/posts/hello-world/hello-world.md /public/posts/image.png (See here image stays on directory back!) So obv the image link will be broken as image in the actual website. In content/posts/hello-world.md you can use ../image.png to fix it. It won’t show in the markdown now but will work in the website. Other way is to create images dir here ~/hugo-test-blog/static/images. So in markdown you can also use /images/image.png as the location for the image. Again it will work in website but won’t show in the site. Most elegant solution In the root of obsidian vault create a directory called images. Store all your images here Now you can link the images in obsidian using /images/image.png. This will work as obsidian is sandboxed and / means root of obsidian vault not your system. This will show the image in your obsidian markdown as well and the blog as well. Now sync this directory with ~/hugo-test-blog/static/images rsync -av --delete ~/vault/images ~/hugo-test-blog/static/images You’re done! No need of any fancy script. Even better solution Host all your images in a cdn and simply copy and paste url in your markdown. Its the most easiest option.">
+  <meta property="og:description" content="Setup Hugo &#43; Obsidian &#43; Git blog pipeline in Arch Linux Inspired by NetworkChuck’s I started a blog…..in 2024 (why you should too) video.
+Install and setup Install obsidian (but is org-mode &gt; markdown ??) - sudo pacman -S obsidian Install prerequisites - Install Go - Programming language in which hugo is made so its needed for hugo binary to work. sudo pacman -S go Install git and set it up sudo pacman -S git # Install git # Configure your git with username and email git config --global user.name &#34;Insane&#34; git config --global user.email &#34;insane@testemail.com&#34; Install Hugo - Hugo itself is installed as a single binary called hugo ! sudo pacman -S hugo Setup obsidian Open obsidian and create a vault. Vault is just the main folder inside which you store all your obsidian notes. Let the vault be ~/vault for this tutorial purpose. All obsidian config for themes, plugins, etc are stored in ~/vault/.obsidian. Create a sub folder called posts where we will store our posts for hugo. Note: Obsidian is sandboxed. When you open obsidian under this vault then ~/vault becomes the root directory for obsidian. The slash / means root of the vault and not your actual system.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:tag" content="Hugo-Pipeline">
-    <meta property="og:image" content="http://localhost:1313/">
+    <meta property="og:image" content="https://hugo.insanelogs.xyz/">
 
 
 
@@ -138,7 +142,7 @@
           <circle cx="12" cy="12" r="10"></circle>
           <polyline points="12 6 12 12 16 14"></polyline>
         </svg>
-        6 minutes
+        7 minutes
 
         
       </p>
@@ -146,7 +150,7 @@
 
     <article>
       <h1 class="post-title">
-        <a href="http://localhost:1313/posts/hugo-pipeline/">Insane hugo pipeline</a>
+        <a href="https://hugo.insanelogs.xyz/posts/hugo-pipeline/">Insane hugo pipeline</a>
       </h1>
 
       
@@ -156,42 +160,60 @@
       
 
       <div class="post-content">
-        <h1 id="setup-hugo--git--obsidian-blog-pipeline">Setup Hugo + Git + Obsidian blog pipeline</h1>
+        <h1 id="setup-hugo--obsidian--git-blog-pipeline-in-arch-linux">Setup Hugo + Obsidian + Git blog pipeline in Arch Linux</h1>
+<blockquote>
+<p>Inspired by NetworkChuck&rsquo;s <a href="https://youtu.be/dnE7c0ELEH8?si=3E6JENc2fJGbbgVT">I started a blog&hellip;..in 2024 (why you should too)</a> video.</p></blockquote>
 <h2 id="install-and-setup">Install and setup</h2>
-<h4 id="1-install-obsidian-actually-org-mode-is-better-for-those-who-know--">1. Install obsidian (Actually org mode is better, for those who know) -</h4>
+<ol>
+<li>Install obsidian (but is org-mode &gt; markdown ??) -</li>
+</ol>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo pacman -S obsidian
-</span></span></code></pre></div><h4 id="2-install-prerequisites--">2. Install prerequisites -</h4>
+</span></span></code></pre></div><ol start="2">
+<li>Install prerequisites -</li>
+</ol>
 <ul>
 <li>Install Go - Programming language in which hugo is made so its needed for hugo binary to work.</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo pacman -S go
 </span></span></code></pre></div><ul>
-<li>Install git - Version control system where we will upload our hugo site.</li>
+<li>Install git and set it up</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo pacman -S git
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo pacman -S git <span style="color:#75715e"># Install git</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Configure your git with username and email</span>
 </span></span><span style="display:flex;"><span>git config --global user.name <span style="color:#e6db74">&#34;Insane&#34;</span>
 </span></span><span style="display:flex;"><span>git config --global user.email <span style="color:#e6db74">&#34;insane@testemail.com&#34;</span>
 </span></span></code></pre></div><ul>
-<li>Install Hugo - Hugo itself is installed as a single binary called hugo!</li>
+<li>Install Hugo - Hugo itself is installed as a single binary called <code>hugo</code> !</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo pacman -S hugo
 </span></span></code></pre></div><hr>
 <h2 id="setup-obsidian">Setup obsidian</h2>
 <ol>
-<li>Open obsidian and create a vault. Vault is just the main folder where all sub folders or notes are stored. This entire vault can be backed up in cloud storage.
+<li>Open obsidian and create a vault. Vault is just the main folder inside which you store all your obsidian notes.
 <ul>
-<li>Let the vault be ~/vault for this tutorial purpose.</li>
+<li>Let the vault be <code>~/vault</code> for this tutorial purpose.</li>
 </ul>
 </li>
-<li>Obsidian directly now opens up in this vault. All the obsidian configs for themes, plugins, etc are stored in this root folder inside <code>.obsidian</code>.</li>
+<li>All obsidian config for themes, plugins, etc are stored in <code>~/vault/.obsidian</code>.</li>
 <li>Create a sub folder called posts where we will store our posts for hugo.</li>
 </ol>
+<p>Note: Obsidian is sandboxed. When you open obsidian under this vault then ~/vault becomes the root directory for obsidian. The slash <code>/</code> means root of the vault and not your actual system.</p>
 <hr>
 <h2 id="create-a-sample-blog">Create a sample blog</h2>
 <ol>
-<li>Create a new note as hello-world and save it. The <code>.md</code> extension is automatically added but not shown inside obsidian file tree.</li>
+<li>Go to <code>~/vault</code></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd ~/vault
+</span></span></code></pre></div><ol start="2">
+<li>Create posts folder. Inside here all your markdowns will be stored which you want to display as blog in the website.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir ~/vault/posts
+</span></span></code></pre></div><ol start="3">
+<li>Create a markdown file <code>hello-world.md</code>.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>touch ~/vault/posts/hello-world.md
+</span></span></code></pre></div><ol start="4">
 <li>Add the following content -</li>
 </ol>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span># My first blog
@@ -205,34 +227,38 @@
 <li>Run <code>hugo new site &lt;site-name&gt;</code> to make a site.
 <ul>
 <li>Example: <code>hugo new site hugo-test-blog</code></li>
-<li>Let the site main directory be at ~/hugo-test-blog for this tutorial.</li>
+<li>Let the site main directory be at <code>~/hugo-test-blog</code> for this tutorial.</li>
 </ul>
 </li>
-<li>Go inside hugo-test-blog. Inside here all your website content is present.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo new site ~/hugo-test-blog
+</span></span><span style="display:flex;"><span>cd ~/hugo-test-blog
+</span></span></code></pre></div><ol start="3">
+<li>Inside <code>hugo-test-blog</code> all your code for the website is present.</li>
 <li>Initialize git repository here
 <ul>
 <li><code>git init .</code></li>
-<li>create a repository in GitHub, then a page will open on how to connect your local folder to the remote GitHub repository. Simply follow it :].</li>
+<li>create a repository in GitHub and simply connect ~/hugo-test-blog to it using the instructions you get after creating the repository. I hope you know this stuff. If you don&rsquo;t know these its better to learn git first.</li>
 </ul>
 </li>
 </ol>
 <h4 id="install-a-hugo-theme">Install a hugo theme</h4>
 <ol>
 <li>Go to <a href="https://gohugo.io/installation/linux/">https://gohugo.io/installation/linux/</a></li>
-<li>Select a desired theme and head to its GitHub page. Here you will find all instructions on how to use it, install it, etc. I will use a theme called hello-friend-ng and use git submodule method to install the theme.</li>
+<li>Select a desired theme and head to its GitHub page. Here you will find all instructions on how to use it, install it, etc. I will use a theme called <code>hello-friend-ng</code> and use git submodule method to install the theme.</li>
 <li>Make sure you are inside <code>hugo-test-blog</code>. Then run this command to install the theme.</li>
 </ol>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Theme name: hello-friend-ng. </span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Goto: https://github.com/rhazdon/hugo-theme-hello-friend-ng to know more about it.</span>
 </span></span><span style="display:flex;"><span>git submodule add https://github.com/rhazdon/hugo-theme-hello-friend-ng.git themes/hello-friend-ng
 </span></span></code></pre></div><ol start="4">
-<li>Copy this config to <code>./hugo.toml</code>. Or simply head to the theme GitHub and get the latest config from their.</li>
+<li>Copy this config to <code>./hugo.toml</code>. Or simply head to the theme GitHub and get the latest config from their. The config present in the GitHub had a error which I fixed here!</li>
 </ol>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span><span style="color:#a6e22e">baseurl</span>              = <span style="color:#e6db74">&#34;localhost&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">title</span>                = <span style="color:#e6db74">&#34;My Blog&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">languageCode</span>         = <span style="color:#e6db74">&#34;en-us&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">theme</span>                = <span style="color:#e6db74">&#34;hello-friend-ng&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">pagination</span>.<span style="color:#a6e22e">pagerSize</span> = <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">pagination</span>.<span style="color:#a6e22e">pagerSize</span> = <span style="color:#ae81ff">10</span> <span style="color:#75715e"># There was a mistake in this line which I fixed.</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">params</span>]
 </span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">dateform</span>        = <span style="color:#e6db74">&#34;Jan 2, 2006&#34;</span>
@@ -285,30 +311,29 @@
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">identifier</span> = <span style="color:#e6db74">&#34;blog&#34;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">name</span>       = <span style="color:#e6db74">&#34;Blog&#34;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">url</span>        = <span style="color:#e6db74">&#34;/posts&#34;</span>
-</span></span></code></pre></div><h4 id="run-hugo-site">Run hugo site</h4>
+</span></span></code></pre></div><h4 id="run-hugo-site-locally">Run hugo site locally</h4>
 <ol>
 <li>Run this command to run the hugo site locally</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo server -t hello-friend-ng
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo server -t hello-friend-ng <span style="color:#75715e"># This starts the server locally </span>
 </span></span></code></pre></div><ol start="2">
 <li>Go to <code>localhost:1313</code></li>
-<li>Now your site is running!</li>
+<li>Hope you can see your website now!</li>
 </ol>
 <h4 id="post-blogs-in-your-site">Post blogs in your site</h4>
 <ol>
-<li>All your posts goes inside content/posts directory.</li>
-<li>Make <code>posts</code> dir inside <code>content</code> subdir if not already their.</li>
+<li>All your posts goes inside <code>~/hugo-test-blog/content/posts</code> directory.</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir content/posts 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir ~/hugo-test-blog/content/posts <span style="color:#75715e"># Making posts directory inside content is optional though</span>
 </span></span></code></pre></div><ol start="3">
-<li>Sync your obsidian posts folder to content/posts folder. We will use rsync for it.</li>
+<li>Sync your obsidian <code>~/vault/posts</code> with <code>~/hugo-test-blog/content/posts</code> folder. We will use rsync for it.</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rsync -av --delete ~/vault/posts ~/hugo-test-blog/content/posts
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rsync -av --delete ~/vault/posts/ ~/hugo-test-blog/content/posts/
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># source path is where you created your posts dir for obsidian</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># destination path is ..../hugo-test-blog/content/posts</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># You may want to learn about rysnc a bit. Watch this tutorial from Learn Linux TV - https://youtu.be/KG78O53u8rY?si=1O-Zweu05DmH49o0</span>
 </span></span></code></pre></div><ol start="4">
-<li>Done! Go to <code>posts</code> in your website and you will see the latest post.</li>
+<li>Done! Go to <code>posts</code> link in your website and you will see the latest post.</li>
+<li>You must run this rsync command every time you make a new markdown file or change something inside <code>~/vault/posts</code>.</li>
 </ol>
 <hr>
 <h2 id="make-posts-better">Make posts better</h2>
@@ -326,52 +351,110 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>This is an awesome blog. Ah not really I guess.
 </span></span></code></pre></div><ol start="2">
-<li>Run the rsync command every time for now when you change your markdown inside obsidian.</li>
+<li>Run the rsync command.</li>
 <li>Reload the site!</li>
 </ol>
 <hr>
-<h2 id="how-hugo-is-working">How hugo is working.</h2>
+<h2 id="how-hugo-is-working">How hugo is working?</h2>
 <ol>
-<li>All your folders in the <code>~/hugo-test-blog</code> is copied to public folder. And this public folder is what is served by hugo.</li>
-<li>Inside public folder everything is in html or css.</li>
-<li>Only catch is static folder isn&rsquo;t copied to public but the contents inside of it is copied to ~/hugo-test-blog/public.</li>
-<li>Inside public folder any html file if contains <code>/</code> in the url doesn&rsquo;t mean root of your system. The root here is the public folder itself!</li>
+<li>All your contents in the <code>~/hugo-test-blog</code> is copied to <code>~/hugo-test-blog/public</code> folder. This public folder is served by hugo when you run <code>hugo server</code> command.</li>
+<li>Inside public folder everything is in html or css. Static assets only basically.</li>
+<li>Only catch is <code>~/hugo-test-blog/static</code> folder isn&rsquo;t copied to public but the contents inside of it is copied to <code>~/hugo-test-blog/public</code>.</li>
+<li>Inside <code>~/hugo-test-blog/public</code> folder any html file if contains <code>/</code> in any path url doesn&rsquo;t mean root of your system. The root here is the public folder itself! This is something that will get in your head when you start learning server side coding and all.</li>
 </ol>
-<h2 id="show-images-in-our-post">Show images in our post</h2>
+<h2 id="show-images-in-our-post-4-ways---use-the-last-option-if-you-are-confused">Show images in our post (4 ways - Use the last option if you are confused)</h2>
+<h4 id="storing-images-inside-hugo-test-blogposts">Storing images inside ~/hugo-test-blog/posts</h4>
 <ol>
 <li>Showing images can be tricky.</li>
-<li>Posts are stored in <code>~/hugo-test-blog/public/posts</code> directory to show in the website. Inside it hugo first creates a directory named after our post and inside its the html converted version of our posts are stored.</li>
+<li>Posts are stored in <code>~/hugo-test-blog/public/posts</code> directory to show in the website. Inside it hugo first creates a directory named after our post and inside it is the html converted version of our markdown.</li>
 <li>If you stored files like this
 <ul>
-<li>./content/post/hello-world.md</li>
-<li>./content/post/image.png
-It get changed to</li>
-<li>/public/posts/hello-world/hello-world.md</li>
-<li>/public/posts/image.png (See here image stays on directory back!)</li>
+<li><code>~/hugo-test-blog/content/posts/hello-world.md</code></li>
+<li><code>~/hugo-test-blog/content/post/image.png</code>
+After running <code>hugo server</code>
+It gets changed to</li>
+<li><code>~/hugo-test-blog/public/posts/hello-world/hello-world.md</code></li>
+<li><code>~/hugo-test-blog/public/posts/image.png</code> (See here image stays on directory back!)</li>
 </ul>
 </li>
-<li>So obv the image link will be broken as image in the actual website. In <code>content/posts/hello-world.md</code> you can use <code>../image.png</code> to fix it. It won&rsquo;t show in the markdown now but will work in the website.</li>
-<li>Other way is to create images dir here <code>~/hugo-test-blog/static/images</code>.</li>
-<li>So in markdown you can also use <code>/images/image.png</code> as the location for the image. Again it will work in website but won&rsquo;t show in the site.</li>
+<li>Now in ~/vault/posts/hello-world.md you can add image like this.</li>
 </ol>
-<h4 id="most-elegant-solution">Most elegant solution</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>![<span style="color:#f92672">&#34;Some image desc&#34;</span>](<span style="color:#a6e22e">./image.png</span>)
+</span></span></code></pre></div><ol start="5">
+<li>But this won&rsquo;t work in the website as image becomes one directory back their. So better use this</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>!<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;Some image desc&#34;</span><span style="color:#f92672">](</span>../image.png<span style="color:#f92672">)</span>
+</span></span></code></pre></div><ol start="6">
+<li>This will stop showing image in the obsidian markdown preview but will work in the website!</li>
+</ol>
+<h4 id="storing-images-inside-hugo-test-blogstaticimages">Storing images inside ~/hugo-test-blog/static/images</h4>
+<ol>
+<li>Other way is to create images directory here <code>~/hugo-test-blog/static/images</code>.</li>
+<li>Now in ~/vault/posts/hello-world.md use this</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>![<span style="color:#f92672">&#34;Some image desc&#34;</span>](<span style="color:#a6e22e">/images/image.png</span>)
+</span></span></code></pre></div><ol start="3">
+<li>Make sure that image.png is in ~/hugo-test-blog/static/images/image.png.</li>
+<li>This won&rsquo;t show image in obsidian markdown preview but will work in the website.</li>
+</ol>
+<h4 id="most-elegant-solution-just-use-this-and-make-your-life-simple">Most elegant solution (Just use this and make your life simple)</h4>
 <ol>
 <li>In the root of obsidian vault create a directory called <code>images</code>.</li>
-<li>Store all your images here</li>
-<li>Now you can link the images in obsidian using <code>/images/image.png</code>. This will work as obsidian is sandboxed and <code>/</code> means root of obsidian vault not your system. This will show the image in your obsidian markdown as well and the blog as well.</li>
-<li>Now sync this directory with <code>~/hugo-test-blog/static/images</code></li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rsync -av --delete ~/vault/images ~/hugo-test-blog/static/images
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir ~/vault/images
+</span></span></code></pre></div><ol>
+<li>Store all your images here</li>
+<li>Now in ~/vault/posts/hello-world.md use this</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>!<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;Some image desc&#34;</span><span style="color:#f92672">](</span>/images/image.png<span style="color:#f92672">)</span>
+</span></span></code></pre></div><ol start="3">
+<li>This will show image in the markdown preview mode now also! And of course will work in the website too</li>
+<li>Now sync this <code>~/vault/images/</code> with <code>~/hugo-test-blog/static/images/</code></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rsync -av --delete ~/vault/images/ ~/hugo-test-blog/static/images/
 </span></span></code></pre></div><ol start="5">
 <li>You&rsquo;re done! No need of any fancy script.</li>
 </ol>
-<h4 id="even-better-solution">Even better solution</h4>
+<h4 id="even-better-solution-not-needed-for-now">Even better solution (Not needed for now)</h4>
 <p>Host all your images in a cdn and simply copy and paste url in your markdown. Its the most easiest option.</p>
 <hr>
+<h2 id="rsync-script">rsync script</h2>
+<ol>
+<li>Make a script inside <code>~/hugo-test-blog/script.sh</code></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>touch ~/hugo-test-blog/script.sh
+</span></span></code></pre></div><ol start="2">
+<li>Open <code>script.sh</code> and paste the following</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rsync -av --delete ~/vault/posts/ ~/hugo-test-blog/content/posts/
+</span></span><span style="display:flex;"><span>rsync -av --delete ~/vault/images/ ~/hugo-test-blog/static/images/
+</span></span></code></pre></div><ol start="3">
+<li>Make it executable</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod +x ~/hugo-test-blog/script.sh
+</span></span></code></pre></div><ol start="4">
+<li>Run this script whenever you make changes inside <code>~/vault/images/</code> or <code>~/vault/posts/</code></li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>~/hugo-test-blog/script.sh <span style="color:#75715e"># To run the script</span>
+</span></span></code></pre></div><hr>
 <h2 id="make-it-live-via-github-pages">Make it live via GitHub pages</h2>
 <p>Just follow this guide <a href="https://gohugo.io/host-and-deploy/host-on-github-pages/">https://gohugo.io/host-and-deploy/host-on-github-pages/</a>. Its super simple and your site will be up in minutes.</p>
 <hr>
-<p>Well that&rsquo;s it! Thank you.</p>
+<h2 id="build-hugo-site-without-running-it">Build hugo site without running it</h2>
+<ol>
+<li>This will build your hugo static site under <code>~/hugo-test-blog/public</code> but won&rsquo;t run any server locally to serve it.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hugo build
+</span></span></code></pre></div><h4 id="extra-information-below-better-to-ignore">Extra information below (better to ignore)</h4>
+<p>Note: Launching any html file from <code>~/hugo-test-blog/public/</code> won&rsquo;t work as it uses paths like <code>/someimage.png</code> etc. Here <code>slash /</code> would mean your system&rsquo;s root unless a server is serving this directory.
+The GitHub pages link I shared you automatically builds the hugo site when you push any changes using GitHub actions.
+So you may not run <code>hugo build</code> before pushing any changes!
+And that <code>slash /</code> thingy is automatically handled by GitHub. As the root here means the url generated by GitHub pages.</p>
+<hr>
+<p>Well that&rsquo;s it! If you find any errors or mistakes in this blog, please to mail me.</p>
+<p>Mail: <a href="mailto:insane@insanelogs.xyz">insane@insanelogs.xyz</a></p>
+<p>Thank you :]</p>
+<p>🦖</p>
 
       </div>
     </article>
@@ -383,7 +466,7 @@ It get changed to</li>
     <p>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
 
-        <span class="tag"><a href="http://localhost:1313/tags/hugo-pipeline/">hugo-pipeline</a></span>
+        <span class="tag"><a href="https://hugo.insanelogs.xyz/tags/hugo-pipeline/">hugo-pipeline</a></span>
         
     </p>
 
@@ -397,7 +480,7 @@ It get changed to</li>
           <line x1="16" y1="17" x2="8" y2="17"></line>
           <polyline points="10 9 9 9 8 9"></polyline>
         </svg>
-        1105 Words
+        1437 Words
       </p>
 
       <p>
@@ -417,7 +500,7 @@ It get changed to</li>
       <hr />
       <div class="sharing-buttons">
         
-<a class="resp-sharing-button__link" href="https://facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2fhugo-pipeline%2f" target="_blank" rel="noopener" aria-label="" title="Share on facebook">
+<a class="resp-sharing-button__link" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fhugo.insanelogs.xyz%2fposts%2fhugo-pipeline%2f" target="_blank" rel="noopener" aria-label="" title="Share on facebook">
   <div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
     </div>
@@ -425,7 +508,7 @@ It get changed to</li>
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://twitter.com/intent/tweet/?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fhugo-pipeline%2f" target="_blank" rel="noopener" aria-label="" title="Share on twitter">
+<a class="resp-sharing-button__link" href="https://twitter.com/intent/tweet/?url=https%3a%2f%2fhugo.insanelogs.xyz%2fposts%2fhugo-pipeline%2f" target="_blank" rel="noopener" aria-label="" title="Share on twitter">
   <div class="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--small">
       <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
@@ -434,7 +517,7 @@ It get changed to</li>
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=Insane%20hugo%20pipeline&amp;caption=Insane%20hugo%20pipeline&amp;canonicalUrl=http%3a%2f%2flocalhost%3a1313%2fposts%2fhugo-pipeline%2f" target="_blank" rel="noopener" aria-label="" title="Share on tumblr">
+<a class="resp-sharing-button__link" href="https://www.tumblr.com/widgets/share/tool?posttype=link&amp;title=Insane%20hugo%20pipeline&amp;caption=Insane%20hugo%20pipeline&amp;canonicalUrl=https%3a%2f%2fhugo.insanelogs.xyz%2fposts%2fhugo-pipeline%2f" target="_blank" rel="noopener" aria-label="" title="Share on tumblr">
   <div class="resp-sharing-button resp-sharing-button--tumblr resp-sharing-button--small">
     <div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.156 1.404h-.178l.011.002z"/></svg>
@@ -443,7 +526,7 @@ It get changed to</li>
 </a>
 
 
-<a class="resp-sharing-button__link" href="mailto:?subject=Insane%20hugo%20pipeline&amp;body=http%3a%2f%2flocalhost%3a1313%2fposts%2fhugo-pipeline%2f" target="_self" rel="noopener" aria-label="" title="Share via email">
+<a class="resp-sharing-button__link" href="mailto:?subject=Insane%20hugo%20pipeline&amp;body=https%3a%2f%2fhugo.insanelogs.xyz%2fposts%2fhugo-pipeline%2f" target="_self" rel="noopener" aria-label="" title="Share via email">
   <div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
     </div>
@@ -451,7 +534,7 @@ It get changed to</li>
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://pinterest.com/pin/create/button/?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fhugo-pipeline%2f&amp;media=http%3a%2f%2flocalhost%3a1313%2fposts%2fhugo-pipeline%2f;description=Insane%20hugo%20pipeline" target="_blank" rel="noopener" aria-label="" title="Share on pinterest">
+<a class="resp-sharing-button__link" href="https://pinterest.com/pin/create/button/?url=https%3a%2f%2fhugo.insanelogs.xyz%2fposts%2fhugo-pipeline%2f&amp;media=https%3a%2f%2fhugo.insanelogs.xyz%2fposts%2fhugo-pipeline%2f;description=Insane%20hugo%20pipeline" target="_blank" rel="noopener" aria-label="" title="Share on pinterest">
   <div class="resp-sharing-button resp-sharing-button--pinterest resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/></svg>
     </div>
@@ -459,7 +542,7 @@ It get changed to</li>
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2flocalhost%3a1313%2fposts%2fhugo-pipeline%2f&amp;title=Insane%20hugo%20pipeline&amp;summary=Insane%20hugo%20pipeline&amp;source=http%3a%2f%2flocalhost%3a1313%2fposts%2fhugo-pipeline%2f" target="_blank" rel="noopener" aria-label="" title="Share on linkedin">
+<a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fhugo.insanelogs.xyz%2fposts%2fhugo-pipeline%2f&amp;title=Insane%20hugo%20pipeline&amp;summary=Insane%20hugo%20pipeline&amp;source=https%3a%2f%2fhugo.insanelogs.xyz%2fposts%2fhugo-pipeline%2f" target="_blank" rel="noopener" aria-label="" title="Share on linkedin">
   <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
     </div>
@@ -467,7 +550,7 @@ It get changed to</li>
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fhugo-pipeline%2f&amp;resubmit=true&amp;title=Insane%20hugo%20pipeline" target="_blank" rel="noopener" aria-label="" title="Share on reddit">
+<a class="resp-sharing-button__link" href="https://reddit.com/submit/?url=https%3a%2f%2fhugo.insanelogs.xyz%2fposts%2fhugo-pipeline%2f&amp;resubmit=true&amp;title=Insane%20hugo%20pipeline" target="_blank" rel="noopener" aria-label="" title="Share on reddit">
   <div class="resp-sharing-button resp-sharing-button--reddit resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
     </div>
@@ -475,7 +558,7 @@ It get changed to</li>
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=http%3a%2f%2flocalhost%3a1313%2fposts%2fhugo-pipeline%2f;title=Insane%20hugo%20pipeline" target="_blank" rel="noopener" aria-label="" title="Share on xing">
+<a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=https%3a%2f%2fhugo.insanelogs.xyz%2fposts%2fhugo-pipeline%2f;title=Insane%20hugo%20pipeline" target="_blank" rel="noopener" aria-label="" title="Share on xing">
   <div class="resp-sharing-button resp-sharing-button--xing resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.188 0c-.517 0-.741.325-.927.66 0 0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211 0 .375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016 0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894 0 21.686 0h-3.498zM3.648 4.74c-.211 0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016 0 .021L1.86 16.051c-.099.188-.093.381 0 .529.085.142.239.234.45.234h3.461c.518 0 .766-.348.945-.667l3.734-6.609-2.378-4.155c-.172-.315-.434-.659-.962-.659H3.648v.016z"/></svg>
     </div>
@@ -483,7 +566,7 @@ It get changed to</li>
 </a>
 
 
-<a class="resp-sharing-button__link" href="whatsapp://send?text=Insane%20hugo%20pipeline%20http%3a%2f%2flocalhost%3a1313%2fposts%2fhugo-pipeline%2f" target="_blank" rel="noopener" aria-label="" title="Share on whatsapp">
+<a class="resp-sharing-button__link" href="whatsapp://send?text=Insane%20hugo%20pipeline%20https%3a%2f%2fhugo.insanelogs.xyz%2fposts%2fhugo-pipeline%2f" target="_blank" rel="noopener" aria-label="" title="Share on whatsapp">
   <div class="resp-sharing-button resp-sharing-button--whatsapp resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
     </div>
@@ -491,7 +574,7 @@ It get changed to</li>
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=http%3a%2f%2flocalhost%3a1313%2fposts%2fhugo-pipeline%2f&amp;t=Insane%20hugo%20pipeline" target="_blank" rel="noopener" aria-label="" title="Share on hacker news">
+<a class="resp-sharing-button__link" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fhugo.insanelogs.xyz%2fposts%2fhugo-pipeline%2f&amp;t=Insane%20hugo%20pipeline" target="_blank" rel="noopener" aria-label="" title="Share on hacker news">
   <div class="resp-sharing-button resp-sharing-button--hackernews resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
 			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M0 24V0h24v24H0zM6.951 5.896l4.112 7.708v5.064h1.583v-4.972l4.148-7.799h-1.749l-2.457 4.875c-.372.745-.688 1.434-.688 1.434s-.297-.708-.651-1.434L8.831 5.896h-1.88z"/></svg>
     </div>
@@ -499,7 +582,7 @@ It get changed to</li>
 </a>
 
 
-<a class="resp-sharing-button__link" href="https://telegram.me/share/url?text=Insane%20hugo%20pipeline&amp;url=http%3a%2f%2flocalhost%3a1313%2fposts%2fhugo-pipeline%2f" target="_blank" rel="noopener" aria-label="" title="Share on telegram">
+<a class="resp-sharing-button__link" href="https://telegram.me/share/url?text=Insane%20hugo%20pipeline&amp;url=https%3a%2f%2fhugo.insanelogs.xyz%2fposts%2fhugo-pipeline%2f" target="_blank" rel="noopener" aria-label="" title="Share on telegram">
   <div class="resp-sharing-button resp-sharing-button--telegram resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
     </div>
@@ -515,7 +598,7 @@ It get changed to</li>
         <div class="pagination__buttons">
             
             <span class="button previous">
-                <a href="http://localhost:1313/posts/hello-world/">
+                <a href="https://hugo.insanelogs.xyz/posts/hello-world/">
                     <span class="button__icon">←</span>
                     <span class="button__text">Hello World!</span>
                 </a>

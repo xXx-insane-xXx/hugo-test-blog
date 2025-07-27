@@ -7,7 +7,7 @@ tags:
 ---
 
 
-# Setup Hugo + Git + Obsidian blog pipeline in Arch Linux
+# Setup Hugo + Obsidian + Git blog pipeline in Arch Linux
 
 > Inspired by NetworkChuck's [I started a blog.....in 2024 (why you should too)](https://youtu.be/dnE7c0ELEH8?si=3E6JENc2fJGbbgVT) video.
 ## Install and setup

@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on This is a test site made in hugo.</title>
-    <link>http://localhost:1313/tags/</link>
+    <link>https://hugo.insanelogs.xyz/tags/</link>
     <description>Recent content in Tags on This is a test site made in hugo.</description>
     <generator>Hugo</generator>
     <language>en</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://hugo.insanelogs.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>First-Post</title>
-      <link>http://localhost:1313/tags/first-post/</link>
+      <link>https://hugo.insanelogs.xyz/tags/first-post/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/first-post/</guid>
+      <guid>https://hugo.insanelogs.xyz/tags/first-post/</guid>
       <description></description>
     </item>
     <item>
       <title>Hello-World</title>
-      <link>http://localhost:1313/tags/hello-world/</link>
+      <link>https://hugo.insanelogs.xyz/tags/hello-world/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/hello-world/</guid>
+      <guid>https://hugo.insanelogs.xyz/tags/hello-world/</guid>
       <description></description>
     </item>
     <item>
       <title>Hugo-Pipeline</title>
-      <link>http://localhost:1313/tags/hugo-pipeline/</link>
+      <link>https://hugo.insanelogs.xyz/tags/hugo-pipeline/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/hugo-pipeline/</guid>
+      <guid>https://hugo.insanelogs.xyz/tags/hugo-pipeline/</guid>
       <description></description>
     </item>
   </channel>
